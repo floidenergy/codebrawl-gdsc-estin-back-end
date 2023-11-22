@@ -9,8 +9,6 @@ const sslServer = https.createServer({
 }, server)
 
 mongoose.connect(process.env.DB_STRING, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   dbName: "codebrawl"
 }).then(() => {
   console.log("connected to the database");
