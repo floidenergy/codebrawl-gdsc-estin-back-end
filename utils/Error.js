@@ -5,7 +5,7 @@ class ReqError extends Error{
   }
 }
 
-const TryCatch = (Controller) => async (req, res, next) => {
+const FuncCapsule = (Controller) => async (req, res, next) => {
   try {
     await Controller(req, res, next);
   } catch (err) {
@@ -13,4 +13,4 @@ const TryCatch = (Controller) => async (req, res, next) => {
   }
 }
 
-module.exports = {ReqError, TryCatch};
+module.exports = {ReqError, FuncCapsule};
