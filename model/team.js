@@ -32,6 +32,11 @@ const teamSchema = new Schema({
   joiningcode: {
     type: String,
     unique: true
+  },
+  chosenCategory: {
+    type: String,
+    enum: ['web developement', 'mobile developement', 'game developement', "ai", "blockchain", "data science"],
+    required: true
   }
 }, {
   timestamps: true

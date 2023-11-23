@@ -18,6 +18,9 @@ authRouter.post("/signIn", passport.authenticate('local'), (req, res, next) => {
     team: req.user.team
   }
 
+  if(!req.user.team)
+    return res.status(307).json({user, route: '/user/team'});// TODO: MAKE THIS ROUTE POINTS INTO TEAM CREATION/JOINING
+
   res.status(200).json(user);
 })
 
@@ -39,6 +42,14 @@ authRouter.post('/signUp', async (req, res, next) => {
 
   await user.save();
   res.sendStatus(201);
+})
+
+authRouter.post('/signOut', (req, res, next) => {
+  req.logout(function (err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+  res.sendStatus(200);
 })
 
 module.exports = authRouter;

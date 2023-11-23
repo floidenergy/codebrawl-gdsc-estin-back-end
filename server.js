@@ -9,6 +9,7 @@ const passport = require("passport");
 const errorHandler = require("./controllers/errorHandler")
 
 const authRouter = require('./routes/authentification')
+const teamRouter = require('./routes/team')
 
 const cors = require('cors')
 const morgan = require('morgan')
@@ -47,7 +48,7 @@ server.use(passport.initialize())
 server.use(passport.session());
 
 server.use('/auth', authRouter);
-
+server.use('/team', teamRouter);
 
 server.get('/', (req, res, next) => {
   console.log(req.user);
@@ -59,3 +60,5 @@ server.use(errorHandler);
 
 module.exports.mongoose = mongoose;
 module.exports.server = server;
+
+

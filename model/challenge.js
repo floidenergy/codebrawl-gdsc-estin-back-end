@@ -15,7 +15,12 @@ const challengeSchema = new Schema({
     type: String,
     required: true,
   },
-  difficulty: { 
+  category: {
+    type: String,
+    enum: ['web developement', 'mobile developement', 'game developement', "ai", "blockchain", "data science"],
+    required: true
+  },
+  difficulty: {
     /** difficulties are
      * 0 easy
      * 1 mid
@@ -33,8 +38,8 @@ const challengeSchema = new Schema({
     required: true
   }
 },
-{
-  timestamps: true
-})
+  {
+    timestamps: true
+  })
 
 module.exports = model('Challenge', challengeSchema);
