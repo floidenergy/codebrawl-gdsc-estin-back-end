@@ -16,9 +16,18 @@ const submissionSchema = new Schema({
     ref: 'Challenge',
     required: true
   },
+  repoLink: {
+    type: String,
+    required: true
+  },
   score: {
     type: Number,
     default: 0
+  },
+  status: {
+    type: String,
+    enum: ["PENDING", "REVIEWED"],
+    default: "PENDING"
   }
 }, {
   timestamps: true

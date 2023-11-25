@@ -8,6 +8,7 @@ const passport = require("passport");
 
 const errorHandler = require("./controllers/errorHandler")
 
+const adminRouter = require('./routes/admin')
 const authRouter = require('./routes/authentification')
 const teamRouter = require('./routes/team')
 
@@ -47,6 +48,7 @@ require('./utils/passport')
 server.use(passport.initialize())
 server.use(passport.session());
 
+server.use('/admin', adminRouter);
 server.use('/auth', authRouter);
 server.use('/team', teamRouter);
 

@@ -19,7 +19,9 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  isStaff: Boolean,
+  isAdmin: {
+    type: Boolean,
+  },
   hash: {
     type: String,
     required: true
