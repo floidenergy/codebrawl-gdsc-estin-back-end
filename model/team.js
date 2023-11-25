@@ -24,7 +24,7 @@ const teamSchema = new Schema({
   },
   submissions: {
     type: [{
-      types: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Submission'
     }],
     default: []

@@ -1,6 +1,5 @@
 const Submission = require('../model/submission')
 const Team = require('../model/team')
-const 
 
 // TODO: POST A SUBMISSION
 const PostSubmission = async (req, res, next) => {
