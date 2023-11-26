@@ -1,14 +1,21 @@
+const { v4 } = require('uuid')
 const { ReqError } = require('../utils/Error')
+const { prepareUser } = require('./utils')
 const Team = require('../model/team')
+const User = require('../model/user')
+
 
 const CreateTeam = async (req, res, next) => {
   const { name, category } = req.body;
+
+  if (!name || !category)
+    throw new ReqError("MISSING FIELDS", 401);
 
   let code;
   let codeDoesExist;
 
   do {
-    code = v4().replace(/[^a-zA-Z]/g, '').slice(0, 4).toUpperCase();
+    code = v4().replace(/[^a-zA-Z]/g, '').slice(0, 6).toUpperCase();
     codeDoesExist = await Team.findOne({ code: code });
   } while (codeDoesExist);
 
@@ -21,10 +28,13 @@ const CreateTeam = async (req, res, next) => {
   });
 
   await team.save();
+  await User.findByIdAndUpdate(req.user.id, { team: team })
+
+  team.leader = prepareUser(team.leader);
   res.status(201).json(team);
 }
 
-const JoinTeam =  async (req, res, next) => {
+const JoinTeam = async (req, res, next) => {
   const { joinCode } = req.params;
 
   const team = await Team.findOne({ joiningcode: joinCode });
@@ -94,4 +104,4 @@ const RefreshCode = async (req, res, next) => {
   res.status(201).json({ code });
 }
 
-module.exports = {CreateTeam, JoinTeam, LeaveTeam, KickUserFromTeam, RefreshCode}
+module.exports = { CreateTeam, JoinTeam, LeaveTeam, KickUserFromTeam, RefreshCode }

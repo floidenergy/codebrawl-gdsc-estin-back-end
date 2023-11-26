@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const { prepareUser } = require('../controllers/utils')
 
 const submissionSchema = new Schema({
   team: {
@@ -33,4 +34,15 @@ const submissionSchema = new Schema({
   timestamps: true
 })
 
+
+submissionSchema.methods.updateScore = async (score) => {
+  this.score += score;
+  await this.save();
+}
+
+submissionSchema.pre("init", async (next) => {
+  await this.populate(['team', 'submitter']);
+  this.submitter.prepareUser();
+  next()
+})
 module.exports = model('Submission', submissionSchema);

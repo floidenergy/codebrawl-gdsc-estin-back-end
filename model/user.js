@@ -1,4 +1,4 @@
-const {Schema, model, models} = require("mongoose");
+const { Schema, model, models } = require("mongoose");
 
 const userSchema = new Schema({
   firstname: {
@@ -37,5 +37,22 @@ const userSchema = new Schema({
 }, {
   timestamps: true
 })
+
+userSchema.pre('init', async (next) => {
+  if (this.team)
+    await this.populate('team');
+
+  next();
+})
+
+userSchema.methods.prepareData = () => {
+  this.email = undefined;
+  this.hash = undefined;
+  this.salt = undefined;
+  this.createdAt = undefined;
+  this.updatedAt = undefined;
+  this.__v = undefined;
+  return this
+}
 
 module.exports = model('User', userSchema)
