@@ -33,7 +33,7 @@ const challengeSchema = new Schema({
     required: true
   },
   creator: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "User",
     required: true
   }

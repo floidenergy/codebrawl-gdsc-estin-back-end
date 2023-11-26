@@ -4,11 +4,11 @@ const {createChallenge,updateChallenge,deleteChallenge} = require('../controller
 
 const adminRouter = Router();
 
-// adminRouter.use((req, res) => {
-//   if (!req.user || req.user.isAdmin)
-//     throw new ReqError("Unauthorized", 401);
-//   next();
-// })
+adminRouter.use((req, res) => {
+  if (!req.user || req.user.isAdmin)
+    throw new ReqError("Unauthorized", 401);
+  next();
+})
 
 adminRouter.get("/",(req, res)=>{
   res.send("this is admin!");
