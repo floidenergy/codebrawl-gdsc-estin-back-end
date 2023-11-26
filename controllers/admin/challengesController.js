@@ -31,12 +31,12 @@ module.exports.createChallenge = async (req, res) => {
 
 module.exports.updateChallenge = async (req, res) => {
   const { id } = req.params;
-
+  const { name, description, link, category, difficulty, creator } = req.body;
   const existingChallenge = await Challenge.findById(id);
   if (!existingChallenge) {
     return res.status(404).json({ status: 404, error: "Challenge not found." });
   }
-  let challenge = await Challenge.findByIdAndUpdate(id, req.body, {
+  let challenge = await Challenge.findByIdAndUpdate(id,  { name, description, link, category, difficulty, creator }, {
     new: true,
   });
 
