@@ -1,20 +1,14 @@
 const Challenge = require("../../model/challenge");
+const { ReqError } = require("../../utils/Error");
 
 module.exports.createChallenge = async (req, res) => {
   const { name, description, link, category, difficulty, creator } = req.body;
   if (!name || !description || !link || !category || !difficulty || !creator) {
-    return res
-      .status(400)
-      .json({ status: 400, error: "All fields are required." });
+    throw ReqError("All fields are required." ,400)
   }
   const existingChallenge = await Challenge.findOne({ name });
   if (existingChallenge) {
-    return res
-      .status(400)
-      .json({
-        status: 400,
-        error: "Challenge with the same name already exists.",
-      });
+    throw ReqError("Challenge with the same name already exists",400);
   }
   const challenge = new Challenge({
     name,
@@ -34,7 +28,7 @@ module.exports.updateChallenge = async (req, res) => {
   const { name, description, link, category, difficulty, creator } = req.body;
   const existingChallenge = await Challenge.findById(id);
   if (!existingChallenge) {
-    return res.status(404).json({ status: 404, error: "Challenge not found." });
+    throw ReqError("Challenge not found." ,404);
   }
   let challenge = await Challenge.findByIdAndUpdate(id,  { name, description, link, category, difficulty, creator }, {
     new: true,
@@ -48,7 +42,7 @@ module.exports.deleteChallenge = async (req, res) => {
   const challenge = await Challenge.findByIdAndDelete(id);
 
   if (!challenge) {
-    res.status(404).json({ status: 404, error: "Challenge not found" });
+    throw ReqError( "Challenge not found" ,400)
   } else {
     res.json({ status: 200, message: "Challenge deleted successfully" });
   }
