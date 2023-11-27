@@ -35,12 +35,12 @@ const submissionSchema = new Schema({
 })
 
 
-submissionSchema.methods.updateScore = async (score) => {
+submissionSchema.methods.updateScore = async function(score) {
   this.score += score;
   await this.save();
 }
 
-submissionSchema.pre("init", async (next) => {
+submissionSchema.post("init", async function(next) {
   await this.populate(['team', 'submitter']);
   this.submitter.prepareUser();
   next()

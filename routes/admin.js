@@ -5,8 +5,9 @@ const adminRouter = Router();
 
 adminRouter.use((req, res) => {
   if (!req.user || req.user.isAdmin)
-    throw new ReqError("Unauthorized", 401);
-  next();
+    return next(new ReqError('NO SESSION FOUND', 401))
+
+  next()
 })
 
 

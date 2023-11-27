@@ -1,24 +1,26 @@
-require('dotenv').config()
-const express = require('express')
+require('dotenv').config();
+const express = require('express');
 
 const session = require("express-session");
 const mongoose = require('mongoose');
 const MongoStorage = require("connect-mongo");
 const passport = require("passport");
 
-const errorHandler = require("./controllers/errorHandler")
+const errorHandler = require("./controllers/errorHandler");
 
-const adminRouter = require('./routes/admin')
-const authRouter = require('./routes/authentification')
-const teamRouter = require('./routes/team')
+const adminRouter = require('./routes/admin');
+const authRouter = require('./routes/authentification');
+const teamRouter = require('./routes/team');
+const challengeRouter = require('./routes/challenge');
+const categoryRouter = require('./routes/category');
 
-const cors = require('cors')
-const morgan = require('morgan')
+const cors = require('cors');
+const morgan = require('morgan');
 
 const server = express();
 
 server.use(morgan('dev'));
-server.use(cors({origin: process.env.ALLOWED_ORIGIN.split(', '), credentials: true}));
+server.use(cors({ origin: process.env.ALLOWED_ORIGIN.split(', '), credentials: true }));
 
 server.use(express.json({ limit: '2mb' }));
 server.use(express.urlencoded({ extended: false }));
@@ -43,17 +45,18 @@ server.use(session({
   }
 }))
 
-require('./utils/passport')
+require('./utils/passport');
 
-server.use(passport.initialize())
+server.use(passport.initialize());
 server.use(passport.session());
 
 server.use('/admin', adminRouter);
 server.use('/auth', authRouter);
 server.use('/team', teamRouter);
+server.use('/challenge', challengeRouter);
+server.use('/category', categoryRouter);
 
 server.get('/', (req, res, next) => {
-  console.log(req.user);
   res.send('welcome to codebrawl back end server');
 })
 

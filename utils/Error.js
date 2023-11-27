@@ -1,7 +1,7 @@
 class ReqError extends Error{
-  constructor(message, status){
+  constructor(message, code){
     super(message);
-    this.status = status;
+    this.code = code;
   }
 }
 

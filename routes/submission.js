@@ -6,9 +6,9 @@ const submissionRouter = Router();
 
 submissionRouter.use((req, res, next) => {
   if (!req.user)
-    return next(new ReqError(401, 'Unauthorized'));
+    return next(new ReqError('NO SESSION FOUND', 401))
 
-  next();
+  next()
 })
 
 submissionRouter.get("/:teamID", FuncCapsule(GetAllTeamSubmissions));

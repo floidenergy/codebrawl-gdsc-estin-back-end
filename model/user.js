@@ -38,20 +38,20 @@ const userSchema = new Schema({
   timestamps: true
 })
 
-userSchema.pre('init', async (next) => {
-  if (this.team)
-    await this.populate('team');
+userSchema.methods.prepareData = function () {;
 
-  next();
-})
-
-userSchema.methods.prepareData = () => {
-  this.email = undefined;
   this.hash = undefined;
   this.salt = undefined;
   this.createdAt = undefined;
   this.updatedAt = undefined;
   this.__v = undefined;
+  return this
+}
+
+userSchema.methods.preparePublicData = function () {
+  this.prepareData();
+  this.email = undefined;
+
   return this
 }
 
