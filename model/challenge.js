@@ -17,7 +17,7 @@ const challengeSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ['web developement', 'mobile developement', 'game developement', "ai", "blockchain", "data science"],
+    enum: ['WEB', 'MOBILE', 'MOBILE', "AI", "BLOCKCHAIN", "DATASCIENCE"],
     required: true
   },
   difficulty: {

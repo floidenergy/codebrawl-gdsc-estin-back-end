@@ -13,7 +13,7 @@ const teamRouter = Router();
 
 teamRouter.use((req, res, next) => {
   if (!req.user)
-    return next(new ReqError(401, 'Unauthorized'))
+    return next(new ReqError('NO SESSION FOUND', 401))
 
   next()
 })
@@ -25,7 +25,7 @@ teamRouter.post('/', FuncCapsule(CreateTeam))
 teamRouter.put('/join/:joinCode', FuncCapsule(JoinTeam));
 
 // leave a team
-teamRouter.put('/leave/:teamID', FuncCapsule(LeaveTeam))
+teamRouter.put('/leave', FuncCapsule(LeaveTeam))
 
 // kick member from the team
 teamRouter.put('/kick/:teamID/:memberID', FuncCapsule(KickUserFromTeam))

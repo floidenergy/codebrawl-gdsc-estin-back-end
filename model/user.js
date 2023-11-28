@@ -1,4 +1,4 @@
-const {Schema, model, models} = require("mongoose");
+const { Schema, model, models } = require("mongoose");
 
 const userSchema = new Schema({
   firstname: {
@@ -37,5 +37,22 @@ const userSchema = new Schema({
 }, {
   timestamps: true
 })
+
+userSchema.methods.prepareData = function () {;
+
+  this.hash = undefined;
+  this.salt = undefined;
+  this.createdAt = undefined;
+  this.updatedAt = undefined;
+  this.__v = undefined;
+  return this
+}
+
+userSchema.methods.preparePublicData = function () {
+  this.prepareData();
+  this.email = undefined;
+
+  return this
+}
 
 module.exports = model('User', userSchema)
